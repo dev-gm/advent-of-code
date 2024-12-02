@@ -60,7 +60,7 @@ if [[ "$1" == "build" ]]; then
 	done
 elif [[ "$1" == "run" ]]; then
 	. "$0" build "$2" "$3"
-	if [ -z inputs/* ]; then
+	if [ -z "$(printf inputs/*)" ]; then
 		printf "$(tput bold)no inputs found!$(tput sgr0)\n"
 		exit 1
 	fi

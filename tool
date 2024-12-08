@@ -12,11 +12,18 @@ _argtoyear() {
 		echo "$1"
 	fi
 }
+_argtoday() {
+	if [[ "${#1}" == "1" ]]; then
+		echo "0$1"
+	else
+		echo "$1"
+	fi
+}
 
 if [[ "$1" == "build" ]]; then
 	"$0" new "$2" "$3" "$4"
 	"$0" clean "$2" "$3"
-	cd "$(dirname "$0")"/"$(_argtoyear "$2")"/"$3"
+	cd "$(dirname "$0")"/"$(_argtoyear "$2")"/"$(_argtoday "$3")"
 	if [ ! -f .lang ]; then
 		printf "$(tput bold)no .lang found$(tput sgr0)\n" 1>&2
 		exit 1
@@ -87,10 +94,10 @@ elif [[ "$1" == "run" ]]; then
 		done
 	fi
 elif [[ "$1" == "clean" ]]; then
-	rm -f "$(dirname "$0")"/"$(_argtoyear "$2")"/"$3"/out/*
+	rm -f "$(dirname "$0")"/"$(_argtoyear "$2")"/"$(_argtoday "$3")"/out/*
 elif [[ "$1" == "new" ]] || [[ "$1" == "lang" ]]; then
-	mkdir -p "$(dirname "$0")"/"$(_argtoyear "$2")"/"$3"
-	cd "$(dirname "$0")"/"$(_argtoyear "$2")"/"$3"
+	mkdir -p "$(dirname "$0")"/"$(_argtoyear "$2")"/"$(_argtoday "$3")"
+	cd "$(dirname "$0")"/"$(_argtoyear "$2")"/"$(_argtoday "$3")"
 	mkdir -p out
 	mkdir -p inputs
 	if [ -n "$(echo $4 | xargs)" ]; then

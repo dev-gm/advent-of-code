@@ -73,7 +73,7 @@ if [[ "$1" == "build" ]]; then
 	esac
 elif [[ "$1" == "run" ]]; then
 	. "$0" build "$2" "$3"
-	if [ -z "$(printf inputs/*)" ]; then
+	if [ -z "$(echo inputs/*)" ]; then
 		printf "$(tput bold)no inputs found!$(tput sgr0)\n"
 		exit 1
 	fi
